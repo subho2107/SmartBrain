@@ -53,6 +53,7 @@ class App extends Component {
     }
 
     calculateFaceLocation = (data) => {
+        console.log(data);
         const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
         const image = document.getElementById('inputimage');
         const width = Number(image.width);
@@ -71,9 +72,15 @@ class App extends Component {
     onInputChange = (event) => {
         this.setState({input: event.target.value})
     }
+    onInputChangeImg = (event) => {
+        this.setState({input: event})
+    }
+
     onButtonSubmit = () => {
+        const herokuLink = 'mysterious-temple-49161.herokuapp.com';
+        // const localHost = 'localhost:3000';
         this.setState({imageUrl: this.state.input});
-        fetch('https://mysterious-temple-49161.herokuapp.com/imageUrl', {
+        fetch(`https://${herokuLink}/imageUrl`, {
             method: 'post',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -83,7 +90,7 @@ class App extends Component {
             .then(response => response.json())
             .then(response => {
                 if (response) {
-                    fetch('https://mysterious-temple-49161.herokuapp.com/image', {
+                    fetch(`https://${herokuLink}/image`, {
                         method: 'put',
                         headers: {'Content-Type': 'application/json'},
                         body: JSON.stringify({
@@ -102,6 +109,9 @@ class App extends Component {
                 this.displayFaceBox(this.calculateFaceLocation(response))
             })
             .catch(err => console.log(err));
+    }
+    makeInitialState = () =>{
+        this.setState(initialState)
     }
     onRouteChange = (route) => {
         if (route === 'home') {
@@ -128,6 +138,8 @@ class App extends Component {
                         <ImageLinkForm
                             onInputChange={this.onInputChange}
                             onButtonSubmit={this.onButtonSubmit}
+                            onInputChangeImg={this.onInputChangeImg}
+                            makeInitialState = {this.makeInitialState}
                         />
                         <FaceRecognition box={box} imageUrl={imageUrl}/>
                     </div>
