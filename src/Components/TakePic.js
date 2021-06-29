@@ -1,8 +1,7 @@
 import React from 'react';
 import Webcam from "react-webcam";
 import '../TakePic.css';
-// import Modal from "react-bootstrap/Modal";
-// import "bootstrap/dist/css/bootstrap.min.css";
+
 class TakePic extends React.Component {
     setRef = webcam => {
         this.webcam = webcam;

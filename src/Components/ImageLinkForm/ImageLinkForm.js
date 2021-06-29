@@ -7,7 +7,6 @@ const ImageLinkForm = ({onInputChange, onButtonSubmit, onInputChangeImg})=>{
 		setCam(!showCam)
 	}
 	const func = (imgLink) =>{
-		console.log("imkjhk",imgLink);
 		onInputChangeImg(imgLink);
 		onButtonSubmit();
 	}
