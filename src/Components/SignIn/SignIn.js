@@ -29,6 +29,9 @@ class SignIn extends React.Component {
                     this.props.loadUser(user)
                     this.props.onRouteChange('home');
                 }
+                else {
+                    alert("Email or password is wrong");
+                }
             })
     }
     render() {
@@ -58,6 +61,7 @@ class SignIn extends React.Component {
                                     id="password"
                                     onChange={this.onPasswordChange}
                                 />
+
                             </div>
                         </fieldset>
                         <div className="">
