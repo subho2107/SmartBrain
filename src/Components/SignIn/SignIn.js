@@ -30,6 +30,7 @@ class SignIn extends React.Component {
                     this.props.onRouteChange('home');
                 }
                 else {
+                    console.log("reached")
                     alert("Email or password is wrong");
                 }
             })
