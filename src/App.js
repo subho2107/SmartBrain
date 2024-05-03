@@ -52,19 +52,19 @@ class App extends Component {
         })
     }
     convertPosition = (data) =>{
-        const clarifaiFace = data.region_info.bounding_box;
+        const clarifaiFace = data;
         const image = document.getElementById('inputimage');
         const width = Number(image.width);
         const height = Number(image.height);
         return {
-            leftCol: clarifaiFace.left_col * width,
-            topRow: clarifaiFace.top_row * height,
-            rightCol: width - (clarifaiFace.right_col * width),
-            bottomRow: height - (clarifaiFace.bottom_row * height)
+            leftCol: clarifaiFace.leftCol * width,
+            topRow: clarifaiFace.topRow * height,
+            rightCol: width - (clarifaiFace.rightCol * width),
+            bottomRow: height - (clarifaiFace.bottomRow * height)
         }
     }
     calculateFaceLocation = (data) => {
-        const positions = data.outputs[0].data.regions.map(this.convertPosition);
+        const positions = data.map(this.convertPosition);
         return positions;
     }
 
@@ -80,10 +80,10 @@ class App extends Component {
     }
 
     onButtonSubmit = () => {
-        const herokuLink = 'mysterious-temple-49161.herokuapp.com';
+        const renderLink = 'https://smartbrain-api-ub5o.onrender.com';
         // const localHost = 'localhost:3000';
         this.setState({imageUrl: this.state.input});
-        fetch(`https://${herokuLink}/imageUrl`, {
+        fetch(`${renderLink}/imageUrl`, {
             method: 'post',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -93,7 +93,7 @@ class App extends Component {
             .then(response => response.json())
             .then(response => {
                 if (response) {
-                    fetch(`https://${herokuLink}/image`, {
+                    fetch(`${renderLink}/image`, {
                         method: 'put',
                         headers: {'Content-Type': 'application/json'},
                         body: JSON.stringify({
